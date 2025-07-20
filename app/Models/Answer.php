@@ -21,6 +21,7 @@ class Answer extends Model
         'title'       => 'string',
         'question_id' => 'integer',
         'is_correct'  => 'boolean',
+        'type' => 'string',
     ];
 
     public function question()

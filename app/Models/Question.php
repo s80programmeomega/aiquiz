@@ -13,11 +13,13 @@ class Question extends Model
         'title',
         'status',
         'quiz_id',
+        'answer_type',
     ];
 
     protected $casts = [
         'title' => 'string',
-        'status' => 'boolean'
+        'status' => 'boolean',
+        'answer_type' => 'string',
 
     ];
 

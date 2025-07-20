@@ -224,7 +224,25 @@
 
                                                 <span class="text-start text-gray-100 font-normal"
                                                     style="font-size: 17px;">
-                                                    {{ $answer['title'] ?? '' }}
+
+                                                    @if ($answer->type == 'photo')
+                                                        <img src="{{ asset('uploads/answers/' . basename($answer->title)) }}"
+                                                            class="max-h-10 mx-auto" alt="Uploaded Image">
+                                                    @elseif($answer->type == 'audio')
+                                                        <audio controls>
+                                                            <source
+                                                                src="{{ asset('uploads/answers/' . basename($answer->title)) }}"
+                                                                type="audio/{{ pathinfo($answer->title, PATHINFO_EXTENSION) }}">
+                                                        </audio>
+                                                    @elseif($answer->type == 'video')
+                                                        <video controls class="w-full max-h-10">
+                                                            <source
+                                                                src="{{ asset('uploads/answers/' . basename($answer->title)) }}"
+                                                                type="video/{{ pathinfo($answer->title, PATHINFO_EXTENSION) }}">
+                                                        </video>
+                                                    @else
+                                                        {{ basename($answer->title) ?? '' }}
+                                                    @endif
                                                 </span>
                                             </div>
                                         @endforeach
@@ -252,7 +270,24 @@
                                             </span>
 
                                             <span class="text-start text-gray-100 font-normal" style="font-size: 17px;">
-                                                {{ $queAns->answer->title ?? '' }}
+                                                @if ($queAns->answer->type == 'photo')
+                                                    <img src="{{ asset('uploads/answers/' . basename($queAns->answer->title)) }}"
+                                                        class="max-h-10 mx-auto" alt="Uploaded Image">
+                                                @elseif($queAns->answer->type == 'audio')
+                                                    <audio controls>
+                                                        <source
+                                                            src="{{ asset('uploads/answers/' . basename($queAns->answer->title)) }}"
+                                                            type="audio/{{ pathinfo($queAns->answer->title, PATHINFO_EXTENSION) }}">
+                                                    </audio>
+                                                @elseif($queAns->answer->type == 'video')
+                                                    <video controls class="w-full max-h-10">
+                                                        <source
+                                                            src="{{ asset('uploads/answers/' . basename($queAns->answer->title)) }}"
+                                                            type="video/{{ pathinfo($queAns->answer->title, PATHINFO_EXTENSION) }}">
+                                                    </video>
+                                                @else
+                                                    {{ basename($queAns->answer->title) ?? '' }}
+                                                @endif
                                             </span>
                                         </div>
                                     @endif

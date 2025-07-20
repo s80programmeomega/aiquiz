@@ -463,14 +463,6 @@ class Quiz extends Model implements HasMedia
                             }
                             return $state;
                         })
-                    // ->beforeStateDehydrated(function ($state, Set $set, Get $get) {
-                    //     $answerType = $get('../../answer_type');
-                    //     $answers    = $state ?? [];
-                    //     foreach ($answers as $index => $answer) {
-                    //         $answer['type'] = $answerType;
-                    //     }
-                    //     $set('answers', $answers);
-                    // })
                         ->schema([
                             Group::make([
                                 Hidden::make('type')
@@ -491,6 +483,7 @@ class Quiz extends Model implements HasMedia
                                     ->label(__('messages.common.answer') . ':')
                                     ->disk(config('app.media_disk'))
                                     ->directory('answers')
+                                    ->preserveFilenames()
                                     ->acceptedFileTypes(function (Get $get) {
                                         $answerType = $get('../../answer_type');
                                         if ($answerType === 'photo') {

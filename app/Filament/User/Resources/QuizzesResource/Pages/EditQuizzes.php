@@ -169,20 +169,45 @@ class EditQuizzes extends EditRecord
                         ->first();
 
                     if ($question) {
-                        $question->update([
-                            'title' => $quizQuestion['title'],
-                        ]);
+                        $updateData = ['title' => $quizQuestion['title']];
+                        if (isset($quizQuestion['answer_type'])) {
+                            $updateData['answer_type'] = $quizQuestion['answer_type'];
+                        }
+                        $question->update($updateData);
+                        // $updateData = ['title' => $quizQuestion['title']];
+                        // if (isset($quizQuestion['answer_type'])) {
+                        //     $updateData['answer_type'] = $quizQuestion['answer_type'];
+                        // }
+                        // $question->update($updateData);
                     } else {
-                        $question = Question::create([
+                        $createData = [
                             'quiz_id' => $record->id,
                             'title' => $quizQuestion['title'],
-                        ]);
+                        ];
+                        if (isset($quizQuestion['answer_type'])) {
+                            $createData['answer_type'] = $quizQuestion['answer_type'];
+                        }
+                        $question = Question::create($createData);
+                        // $question = Question::create([
+                        //     'quiz_id' => $record->id,
+                        //     'title' => $quizQuestion['title'],
+                        //     'answer_type' => $quizQuestion['answer_type'],
+                        // ]);
                     }
                 } else {
-                    $question = Question::create([
+                    $createData = [
                         'quiz_id' => $record->id,
                         'title' => $quizQuestion['title'],
-                    ]);
+                    ];
+                    if (isset($quizQuestion['answer_type'])) {
+                        $createData['answer_type'] = $quizQuestion['answer_type'];
+                    }
+                    $question = Question::create($createData);
+                    // $question = Question::create([
+                    //     'quiz_id' => $record->id,
+                    //     'title' => $quizQuestion['title'],
+                    //     'answer_type' => $quizQuestion['answer_type'],
+                    // ]);
                 }
                 $updatedQuestionIds[] = $question->id;
                 Question::where('quiz_id', $record->id)
@@ -195,15 +220,31 @@ class EditQuizzes extends EditRecord
                             ->first();
 
                         if ($answerRecord) {
-                            $answerRecord->update([
-                                'is_correct' => $answer['is_correct']
-                            ]);
+                            $updateData = ['is_correct' => $answer['is_correct']];
+                            if (isset($answer['type'])) {
+                                $updateData['type'] = $answer['type'];
+                            }
+                            $answerRecord->update($updateData);
+                            // $answerRecord->update([
+                            //     'is_correct' => $answer['is_correct'],
+                            //     'type' => $answer['type'],
+                            // ]);
                         } else {
-                            Answer::create([
+                            $createData = [
                                 'question_id' => $question->id,
                                 'title' => $answer['title'],
-                                'is_correct' => $answer['is_correct']
-                            ]);
+                                'is_correct' => $answer['is_correct'],
+                            ];
+                            if (isset($answer['type'])) {
+                                $createData['type'] = $answer['type'];
+                            }
+                            Answer::create($createData);
+                            // Answer::create([
+                            //     'question_id' => $question->id,
+                            //     'title' => $answer['title'],
+                            //     'is_correct' => $answer['is_correct'],
+                            //     'type' => $answer['type'],
+                            // ]);
                         }
                     }
                 }
